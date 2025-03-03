@@ -7,6 +7,6 @@ const SoinsSchema = new mongoose.Schema({
     bath: {type: Boolean,default:false},
 })
 
-const Weigth = mongoose.model('weigth', weightSchema);
+const Care = mongoose.model('Care', SoinsSchema);
 
-module.exports = Weigth;
+module.exports = Care;

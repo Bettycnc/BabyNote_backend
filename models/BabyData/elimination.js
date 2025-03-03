@@ -6,6 +6,6 @@ const EliminationSchema = new mongoose.Schema({
     gambling: { type: Boolean, default: false }
 });
     
-const Elimination = mongoose.model('elimination', EliminationSchema);
+const Elimination = mongoose.model('Elimination', EliminationSchema);
 
 module.exports = Elimination;

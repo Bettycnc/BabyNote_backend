@@ -5,6 +5,6 @@ const temperatureSchema = new mongoose.Schema ({
     temperature: {type: Number, require: true},
 })
 
-const Temperature = mongoose.model('temperature', temperatureSchema);
+const Temperature = mongoose.model('Temperature', temperatureSchema);
 
 module.exports = Temperature;
