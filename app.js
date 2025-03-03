@@ -5,8 +5,8 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
-var usersRouter = require("./routes/users");
-
+var usersRouter = require('./routes/users');
+var prosRouter = require('./routes/pros');
 var app = express();
 
 const cors = require("cors");
@@ -18,6 +18,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/users", usersRouter);
-
+app.use('/users', usersRouter);
+app.use('/pros', prosRouter);
 module.exports = app;
