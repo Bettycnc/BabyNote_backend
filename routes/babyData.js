@@ -3,7 +3,7 @@ const Alimentation = require('../models/BabyData/alimentation');
 const Elimination = require('../models/BabyData/elimination')
 const Care = require('../models/BabyData/care')
 const Temperature = require('../models/BabyData/temperature')
-const Weigth = require('../models/BabyData/weigth');
+const Weight = require('../models/BabyData/weight');
 const Baby = require('../models/baby');
 
 const router = express.Router();
@@ -137,7 +137,7 @@ router.post('/:id/temperature', (req, res) => {
 });
 
 // Route pour ajouter un poids à un bébé
-router.post('/:id/weigth', (req, res) => {
+router.post('/:id/weight', (req, res) => {
     const { id } = req.params;
     const { date, weight } = req.body;
 
@@ -149,19 +149,19 @@ router.post('/:id/weigth', (req, res) => {
         }
 
         // Création du nouveau poids
-        const newWeigth = new Weigth({
+        const newWeight = new Weight({
             date,
             weight,
         });
 
         // Sauvegarde en base de données avec affichage du message et de la data
-        return newWeigth.save()
-            .then(weigth => {
-                baby.weight.push(weigth._id)
+        return newWeight.save()
+            .then(weight => {
+                baby.weight_id.push(weight._id)
                     return baby.save() // Sauvegarde du bébé avec le poids lié
             })
         .then(() => {
-            res.status(200).json({ message: "poids enregistrée", data: newWeigth });
+            res.status(200).json({ message: "poids enregistrée", data: newWeight });
         })
     })
 });

@@ -24,7 +24,7 @@ router.post('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
     const { id } = req.params;
-    Baby.findById(id)
+    Baby.findById(id).populate('alimentation_id').populate('elimination_id').populate('care_id').populate('weight_id').populate('temperature_id')
     .then(data => {
         res.json({result: true, data})
     })
