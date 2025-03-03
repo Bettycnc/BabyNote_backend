@@ -1,21 +1,21 @@
 const mongoose = require('mongoose');
 
 const complementSchema = new mongoose.Schema({
-    foodSupplement: { type: Boolean, required: true },
+    foodSupplementPresent: { type: Boolean, default: false },
     nameFoodSupplement: { type: String, required: true },
     amount: { type: Number, required: true, min: 0, max: 150 },
     method: { type: String, required: true }
 });
 
 const breastFeedingSchema = new mongoose.Schema({
-    breastFeeding: { type: Boolean, required: true },
+    breastFeedingPresent: { type: Boolean, default: false },
     breast: { type: String, required: true },
     duration: { type: Number, required: true },
     foodSupplement: [complementSchema]
 });
 
 const feedingBottleSchema = new mongoose.Schema({
-    feedingBottle: { type: Boolean, required: true },
+    feedingBottlePresent: { type: Boolean, default: false },
     amount: { type: Number, required: true, min: 0, max: 150 }
 });
 

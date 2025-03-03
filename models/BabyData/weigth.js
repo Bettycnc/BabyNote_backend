@@ -5,6 +5,6 @@ const weightSchema = new mongoose.Schema ({
     weight : {type: Number, require: true},
 })
     
-const Weigth = mongoose.model('weigth', weightSchema);
+const Weigth = mongoose.model('Weigth', weightSchema);
 
 module.exports = Weigth;
