@@ -11,7 +11,7 @@ const bcrypt = require('bcrypt');
 // Inscription Pro
 router.post('/signup', (req, res) => {
     if (!checkBody(req.body, [ 'firstName', 'lastName', 'username', 'password', 'confirmPassword'])) {
-      res.json({ result: false, error: 'Missing or empty fields' });
+      res.json({ result: false, error: "Tous les champs sont obligatoires" });
       return;
     }
 
@@ -38,7 +38,7 @@ router.post('/signup', (req, res) => {
         });
       } else {
         // User already exists in database
-        res.json({ result: false, error: 'User already exists' });
+        res.json({ result: false, error: "L'utilisateur existe déjà" });
       }
     });
 }
