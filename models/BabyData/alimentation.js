@@ -9,7 +9,7 @@ const complementSchema = new mongoose.Schema({
 
 const breastFeedingSchema = new mongoose.Schema({
     breastFeedingPresent: { type: Boolean, default: false },
-    breast: { type: String, required: true },
+    breast: [{ type: String, required: true }],
     duration: { type: Number, required: true },
     foodSupplement: [complementSchema]
 });
