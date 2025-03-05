@@ -24,6 +24,32 @@ router.post("/", (req, res) => {
   });
 });
 
+//Ajouter 1 ou plusieur bébé
+
+router.post("/babies", async (req, res) => {
+  const babies = req.body;
+  // Utiliser Promise.all pour attendre que toutes les opérations de sauvegarde soient terminées et pouvoir récupérer les données dans la réponse sans envoyé plusieurs réponses.
+  const savedBabies = await Promise.all(
+    //map pour boucler sur chaque élément envoyé
+    babies.map(async (element) => {
+      const { name, birthday, birthWeight, user_id } = element;
+      console.log("Données reçues :", element);
+      if (!name || !birthday || !birthWeight) {
+        throw new Error("Tous les champs sont requis.");
+      }
+      const newBaby = new Baby({
+        name,
+        birthday,
+        birthWeight,
+        user_id,
+      });
+      return newBaby.save();
+    })
+  );
+  // Envoyer la réponse avec les données des babies sauvegardés
+  res.json({ result: true, data: savedBabies });
+});
+
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   Baby.findById(id)
