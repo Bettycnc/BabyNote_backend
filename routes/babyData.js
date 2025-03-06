@@ -247,31 +247,18 @@ router.post("/:id/weight", (req, res) => {
   router.get("/:id/weigth", (req, res) => {
     const { id } = req.params;
 
-    //On verifie si le bébé existe dans la base de données
-    Baby.findById(id)
-      .populate("weight_id")
-      .then((data) => {
-        if (!data) {
-          return res
-            .status(404)
-            .json({ result: false, message: "Bébé non trouvé" });
-        }
-        res.json({ result: true, data: data.weight_id });
-      });
-  });
-
-  //le parent est il associé à un bébé ?
-  router.get("/:id", (req, res) => {
-    const { id } = req.params;
-    //On verifie si le bébé existe dans la base de données
-    Baby.findOne({ user_id: id }).then((baby) => {
-      if (!baby) {
-        res.json({ result: false, error: "pas de parent associé a ce bébé" });
-      } else {
-        res.json({ result: true, name: baby.name });
+  //On verifie si le bébé existe dans la base de données
+  Baby.findById(id)
+    .populate("weight_id")
+    .then((data) => {
+      if (!data) {
+        return res
+          .status(404)
+          .json({ result: false, message: "Bébé non trouvé" });
       }
+      res.json({ result: true, data: data.weight_id });
     });
-  });
+});
 
 
 //ROUTES PUT BABYDATA

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Baby = require("../models/baby");
+const User = require("../models/users");
 
 // Route pour ajouter un baby dans la base de données
 
@@ -55,6 +56,19 @@ router.post("/babies", async (req, res) => {
   }
 });
 
+//le parent est il associé à un bébé ?
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
+  //On verifie si le bébé existe dans la base de données
+  Baby.findOne({ user_id: id }).then((baby) => {
+    if (!baby) {
+      res.json({ result: false, error: "pas de parent associé a ce bébé" });
+    } else {
+      res.json({ result: true, name: baby.name });
+    }
+  });
+});
+
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   Baby.findById(id)
@@ -66,6 +80,27 @@ router.get("/:id", (req, res) => {
     .populate("temperature_id")
     .then((data) => {
       res.json({ result: true, data });
+    });
+});
+
+//recupérer tous les bébés pour affiché patientes dans list
+router.get("/", (req, res) => {
+  Baby.find()
+    .populate("user_id")
+    .populate("alimentation_id")
+    .populate("elimination_id")
+    .populate("care_id")
+    .populate("weight_id")
+    .populate("temperature_id")
+    .then((data) => {
+      //Je filtre les display true pour n'envoyer que les bébé dans le service
+      const filteredData = data.filter(
+        (baby) => baby.user_id && baby.user_id.display === true
+      );
+      res.json({ result: true, filteredData });
+    })
+    .catch((error) => {
+      res.status(500).json({ result: false, message: error.message });
     });
 });
 
