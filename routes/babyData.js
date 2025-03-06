@@ -175,102 +175,160 @@ router.post("/:id/weight", (req, res) => {
 
 // ROUTE GET BABYDATA
 
-// Route pour afficher les alimentation d'un baby
-router.get("/:id/alimentation", (req, res) => {
-  const { id } = req.params;
+  // Route pour afficher les alimentation d'un baby
+  router.get("/:id/alimentation", (req, res) => {
+    const { id } = req.params;
 
-  //On verifie si le bébé existe dans la base de données
-  Baby.findById(id)
-    .populate("alimentation_id")
-    .then((data) => {
-      if (!data) {
-        return res
-          .status(404)
-          .json({ result: false, message: "Bébé non trouvé" });
-      }
-      res.json({ result: true, data: data.alimentation_id });
-    });
-});
-
-// Route pour afficher les elimination d'un baby
-router.get("/:id/elimination", (req, res) => {
-  const { id } = req.params;
-
-  //On verifie si le bébé existe dans la base de données
-  Baby.findById(id)
-    .populate("elimination_id")
-    .then((data) => {
-      if (!data) {
-        return res
-          .status(404)
-          .json({ result: false, message: "Bébé non trouvé" });
-      }
-      res.json({ result: true, data: data.elimination_id });
-    });
-});
-
-// Route pour afficher les soins d'un baby
-router.get("/:id/care", (req, res) => {
-  const { id } = req.params;
-
-  //On verifie si le bébé existe dans la base de données
-  Baby.findById(id)
-    .populate("care_id")
-    .then((data) => {
-      if (!data) {
-        return res
-          .status(404)
-          .json({ result: false, message: "Bébé non trouvé" });
-      }
-      res.json({ result: true, data: data.care_id });
-    });
-});
-
-// Route pour afficher les temperature d'un baby
-router.get("/:id/temperature", (req, res) => {
-  const { id } = req.params;
-
-  //On verifie si le bébé existe dans la base de données
-  Baby.findById(id)
-    .populate("temperature_id")
-    .then((data) => {
-      if (!data) {
-        return res
-          .status(404)
-          .json({ result: false, message: "Bébé non trouvé" });
-      }
-      res.json({ result: true, data: data.temperature_id });
-    });
-});
-
-// Route pour afficher les temperature d'un baby
-router.get("/:id/weigth", (req, res) => {
-  const { id } = req.params;
-
-  //On verifie si le bébé existe dans la base de données
-  Baby.findById(id)
-    .populate("weight_id")
-    .then((data) => {
-      if (!data) {
-        return res
-          .status(404)
-          .json({ result: false, message: "Bébé non trouvé" });
-      }
-      res.json({ result: true, data: data.weight_id });
-    });
-});
-
-//le parent est il associé à un bébé ?
-router.get("/:id", (req, res) => {
-  const { id } = req.params;
-  //On verifie si le bébé existe dans la base de données
-  Baby.findOne({ user_id: id }).then((baby) => {
-    if (!baby) {
-      res.json({ result: false, error: "pas de parent associé a ce bébé" });
-    } else {
-      res.json({ result: true, name: baby.name });
-    }
+    //On verifie si le bébé existe dans la base de données
+    Baby.findById(id)
+      .populate("alimentation_id")
+      .then((data) => {
+        if (!data) {
+          return res
+            .status(404)
+            .json({ result: false, message: "Bébé non trouvé" });
+        }
+        res.json({ result: true, data: data.alimentation_id });
+      });
   });
+
+  // Route pour afficher les elimination d'un baby
+  router.get("/:id/elimination", (req, res) => {
+    const { id } = req.params;
+
+    //On verifie si le bébé existe dans la base de données
+    Baby.findById(id)
+      .populate("elimination_id")
+      .then((data) => {
+        if (!data) {
+          return res
+            .status(404)
+            .json({ result: false, message: "Bébé non trouvé" });
+        }
+        res.json({ result: true, data: data.elimination_id });
+      });
+  });
+
+  // Route pour afficher les soins d'un baby
+  router.get("/:id/care", (req, res) => {
+    const { id } = req.params;
+
+    //On verifie si le bébé existe dans la base de données
+    Baby.findById(id)
+      .populate("care_id")
+      .then((data) => {
+        if (!data) {
+          return res
+            .status(404)
+            .json({ result: false, message: "Bébé non trouvé" });
+        }
+        res.json({ result: true, data: data.care_id });
+      });
+  });
+
+  // Route pour afficher les temperature d'un baby
+  router.get("/:id/temperature", (req, res) => {
+    const { id } = req.params;
+
+    //On verifie si le bébé existe dans la base de données
+    Baby.findById(id)
+      .populate("temperature_id")
+      .then((data) => {
+        if (!data) {
+          return res
+            .status(404)
+            .json({ result: false, message: "Bébé non trouvé" });
+        }
+        res.json({ result: true, data: data.temperature_id });
+      });
+  });
+
+  // Route pour afficher les temperature d'un baby
+  router.get("/:id/weigth", (req, res) => {
+    const { id } = req.params;
+
+    //On verifie si le bébé existe dans la base de données
+    Baby.findById(id)
+      .populate("weight_id")
+      .then((data) => {
+        if (!data) {
+          return res
+            .status(404)
+            .json({ result: false, message: "Bébé non trouvé" });
+        }
+        res.json({ result: true, data: data.weight_id });
+      });
+  });
+
+  //le parent est il associé à un bébé ?
+  router.get("/:id", (req, res) => {
+    const { id } = req.params;
+    //On verifie si le bébé existe dans la base de données
+    Baby.findOne({ user_id: id }).then((baby) => {
+      if (!baby) {
+        res.json({ result: false, error: "pas de parent associé a ce bébé" });
+      } else {
+        res.json({ result: true, name: baby.name });
+      }
+    });
+  });
+
+
+//ROUTES PUT BABYDATA
+
+router.put('/elimination/:id', (req, res) => {
+      const { id } = req.params;
+      const { date, urine, gambling } = req.body;
+
+      // Mise à jour du document avec les nouvelles valeurs
+      Elimination.findByIdAndUpdate(
+          id,
+          { date, urine, gambling },
+          { new: true, runValidators: true }
+      )
+      .then(data => {
+        if(!data){
+          return res.status(404).json({result: false, message: 'erreur élimination non trouvé'})
+        }
+        return res.json(data);
+      })
+});
+
+router.put('/temperature/:id', (req, res) => {
+  const { id } = req.params;
+  const { date, temperature } = req.body;
+
+  // Mise à jour du document avec les nouvelles valeurs
+  Temperature.findByIdAndUpdate(
+      id,
+      { date, temperature },
+      { new: true, runValidators: true }
+  )
+  .then(data => {
+    if(!data){
+      return res.status(404).json({result: false, message: 'erreur temperature non trouvé'})
+    }
+    return res.json(data);
+  })
+});
+
+
+router.put('/care/:id', (req, res) => {
+  const { id } = req.params;
+  const { date } = req.body;
+
+  // Mise à jour du document avec les nouvelles valeurs
+  Care.findByIdAndUpdate(
+      id,
+      { date },
+      { new: true, runValidators: true }
+  )
+  .then(data => {
+    if(!data){
+      return res.status(404).json({result: false, message: 'erreur temperature non trouvé'})
+    }
+    return res.json(data);
+  })
 });
 
 module.exports = router;
