@@ -72,4 +72,19 @@ router.post("/signin", (req, res) => {
   });
 });
 
+// récupérer toutes la patientes du service
+
+router.get("/", (req, res) => {
+  User.find({ display: true })
+    .then((data) => {
+      // Trier les données par numéro de chambre
+      let dataSort = data.sort((a, b) => a.room - b.room);
+      res.json({ result: true, length: data.length, data: dataSort });
+    })
+    .catch((error) => {
+      // Gérer les erreurs
+      res.status(500).json({ result: false, error: error.message });
+    });
+});
+
 module.exports = router;
