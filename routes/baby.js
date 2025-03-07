@@ -64,14 +64,14 @@ router.get("/redirection/:id", (req, res) => {
     if (!baby) {
       res.json({ result: false, error: "pas de parent associé a ce bébé" });
     } else {
-      res.json({ result: true, name: baby.name });
+      res.json({ result: true, name: baby.name, _id: baby._id });
     }
   });
 });
 
 router.get("/:id", (req, res) => {
   const { id } = req.params;
-  Baby.findById(id)
+  Baby.findById({_id : id})
     .populate("user_id")
     .populate("alimentation_id")
     .populate("elimination_id")
@@ -79,7 +79,7 @@ router.get("/:id", (req, res) => {
     .populate("weight_id")
     .populate("temperature_id")
     .then((data) => {
-      res.json({ result: true, data });
+      res.json({ result: true, data: data });
     });
 });
 
