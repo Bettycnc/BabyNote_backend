@@ -47,6 +47,7 @@ router.post('/signup', (req, res) => {
 
 } )
 
+// Connexion pro
 
 router.post('/signin', (req, res) => {
   if (!checkBody(req.body, ['username', 'password'])) {
