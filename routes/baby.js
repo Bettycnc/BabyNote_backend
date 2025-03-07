@@ -57,7 +57,7 @@ router.post("/babies", async (req, res) => {
 });
 
 //le parent est il associé à un bébé ?
-router.get("/:id", (req, res) => {
+router.get("/redirection/:id", (req, res) => {
   const { id } = req.params;
   //On verifie si le bébé existe dans la base de données
   Baby.findOne({ user_id: id }).then((baby) => {
