@@ -106,7 +106,7 @@ router.post("/:id/care", (req, res) => {
       .then(() => {
         res
           .status(200)
-          .json({ message: "Elimination enregistrée", data: newCare });
+          .json({ message: "Soins enregistrés", data: newCare });
       });
   });
 });
@@ -168,7 +168,7 @@ router.post("/:id/weight", (req, res) => {
         return baby.save(); // Sauvegarde du bébé avec le poids lié
       })
       .then(() => {
-        res.status(200).json({ message: "poids enregistrée", data: newWeight });
+        res.status(200).json({ message: "Poids enregistré", data: newWeight });
       });
   });
 });
@@ -244,7 +244,7 @@ router.post("/:id/weight", (req, res) => {
   });
 
   // Route pour afficher les temperature d'un baby
-  router.get("/:id/weigth", (req, res) => {
+  router.get("/:id/weight", (req, res) => {
     const { id } = req.params;
 
   //On verifie si le bébé existe dans la base de données
@@ -313,6 +313,24 @@ router.put('/care/:id', (req, res) => {
   .then(data => {
     if(!data){
       return res.status(404).json({result: false, message: 'erreur temperature non trouvé'})
+    }
+    return res.json(data);
+  })
+});
+
+router.put('/weight/:id', (req, res) => {
+  const { id } = req.params;
+  const { date, weight } = req.body;
+
+  // Mise à jour du document avec les nouvelles valeurs
+  Weight.findByIdAndUpdate(
+      id,
+      { date, weight },
+      { new: true, runValidators: true }
+  )
+  .then(data => {
+    if(!data){
+      return res.status(404).json({result: false, message: 'erreur poids non trouvé'})
     }
     return res.json(data);
   })
