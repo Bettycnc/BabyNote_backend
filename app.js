@@ -14,7 +14,8 @@ var app = express();
 
 const cors = require("cors");
 app.use(cors());
-
+const fileupload = require("express-fileupload");
+app.use(fileupload());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
