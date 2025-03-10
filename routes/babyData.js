@@ -336,4 +336,24 @@ router.put('/weight/:id', (req, res) => {
   })
 });
 
+
+router.put('/alimentation/:id', (req, res) => {
+  const { id } = req.params;
+  const { date, feedingBottle, breastFeeding } = req.body;
+
+  // Mise à jour du document avec les nouvelles valeurs
+  Alimentation.findByIdAndUpdate(
+      id,
+      { date, feedingBottle, breastFeeding },
+      { new: true, runValidators: true }
+  )
+  .then(data => {
+    if(!data){
+      return res.status(404).json({result: false, message: 'erreur alimentation non trouvé'})
+    }
+    return res.json(data);
+  })
+});
+
+
 module.exports = router;

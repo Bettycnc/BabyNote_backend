@@ -64,10 +64,11 @@ router.get("/redirection/:id", (req, res) => {
     if (!baby) {
       res.json({ result: false, error: "pas de parent associé a ce bébé" });
     } else {
-      res.json({ result: true, name: baby.name, _id: baby._id });
+      res.json({ result: true, name: baby.name, _id: baby._id, birthWeight: baby.birthWeight });
     }
   });
 });
+
 
 router.get("/:id", (req, res) => {
   const { id } = req.params;
@@ -83,7 +84,7 @@ router.get("/:id", (req, res) => {
     });
 });
 
-//recupérer tous les bébés pour affiché patientes dans list
+//recupérer tous les bébés pour afficher patientes dans list
 router.get("/", (req, res) => {
   Baby.find()
     .populate("user_id")
@@ -103,5 +104,18 @@ router.get("/", (req, res) => {
       res.status(500).json({ result: false, message: error.message });
     });
 });
+
+router.get("/search/:id", (req, res) => {
+  const { id } = req.params;
+  //On recherche les bébé associé aux parents
+  Baby.find({ user_id: id }).then((baby) => {
+    if (!baby) {
+      res.json({ result: false, error: "pas bébé associé" });
+    } else {
+      res.json({ result: true, babies: baby });
+    }
+  });
+});
+
 
 module.exports = router;

@@ -87,4 +87,32 @@ router.get("/", (req, res) => {
     });
 });
 
+router.put('/:id', (req, res) => {
+  const { id } = req.params;
+  const { username, password, confirmPassword } = req.body;
+  
+  if(password !== confirmPassword){
+    res.json({
+      result: false,
+      error: "Les mots de passe sont différents",
+    });
+    return;
+  }
+
+  const hash = bcrypt.hashSync(password, 10); 
+
+  // Mise à jour du document avec les nouvelles valeurs
+  User.findByIdAndUpdate(
+      id,
+      { username, password : hash },
+      { new: true, runValidators: true }
+  )
+  .then(data => {
+    if(!data){
+      return res.status(404).json({result: false, message: 'erreur utilisateur non trouvé'})
+    }
+    return res.json(data);
+  })
+});
+
 module.exports = router;
