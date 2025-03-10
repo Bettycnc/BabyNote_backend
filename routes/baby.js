@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 const Baby = require("../models/baby");
 const User = require("../models/users");
-
+const cloudinary = require("cloudinary").v2;
 // Route pour ajouter un baby dans la base de données
 
 router.post("/", (req, res) => {
-  const { name, birthday, birthWeight, user_id } = req.body;
+  const { name, birthday, birthWeight, user_id, picture } = req.body;
   console.log("Données reçues :", req.body);
   if (!name || !birthday || !birthWeight) {
     return res
@@ -18,6 +18,7 @@ router.post("/", (req, res) => {
     birthday,
     birthWeight,
     user_id,
+    picture
   });
 
   newBaby.save().then((baby) => {
@@ -116,6 +117,23 @@ router.get("/search/:id", (req, res) => {
     }
   });
 });
+
+// Upload photo to Cloudinary
+
+router.post("/upload", async (req, res)=> {
+  console.log(req.body);
+  
+  const result = await cloudinary.uploader.upload(req.body.photo);
+  console.log(result);
+  console.log(result.secure_url);
+
+  
+  res.json({url: result.secure_url})
+  
+  
+  })
+
+
 
 
 module.exports = router;
