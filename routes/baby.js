@@ -3,6 +3,8 @@ const router = express.Router();
 const Baby = require("../models/baby");
 const User = require("../models/users");
 const cloudinary = require("cloudinary").v2;
+const uniqid = require('uniqid');
+const fs = require('fs');
 // Route pour ajouter un baby dans la base de données
 
 router.post("/", (req, res) => {
@@ -132,6 +134,28 @@ router.post("/upload", async (req, res)=> {
   
   
   })
+
+  // Upload file to cloudinary
+
+  router.post('/uploadfile', async (req, res) => {
+
+    const photoPath = `./tmp/${uniqid()}.jpg`;
+ const resultMove = await req.files.photoFromFront.mv(photoPath);
+
+   
+   
+    if(!resultMove) {
+      const resultCloudinary = await cloudinary.uploader.upload(photoPath);
+      res.json({ result: true, url: resultCloudinary.secure_url });      
+    } else {
+      res.json({ result: false, error: resultCopy });
+    }
+
+
+    fs.unlinkSync(photoPath);
+   
+    
+   });
 
 
 
