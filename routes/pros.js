@@ -90,7 +90,7 @@ router.put('/:id', (req, res) => {
   const hash = bcrypt.hashSync(password, 10); 
 
   // Mise à jour du document avec les nouvelles valeurs
-  User.findByIdAndUpdate(
+  userPros.findByIdAndUpdate(
       id,
       { username, password : hash },
       { new: true, runValidators: true }
