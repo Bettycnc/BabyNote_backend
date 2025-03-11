@@ -87,11 +87,11 @@ router.get("/", (req, res) => {
     });
 });
 
-router.put('/:id', (req, res) => {
+router.put("/:id", (req, res) => {
   const { id } = req.params;
   const { username, password, confirmPassword } = req.body;
-  
-  if(password !== confirmPassword){
+
+  if (password !== confirmPassword) {
     res.json({
       result: false,
       error: "Les mots de passe sont différents",
@@ -99,20 +99,35 @@ router.put('/:id', (req, res) => {
     return;
   }
 
-  const hash = bcrypt.hashSync(password, 10); 
+  const hash = bcrypt.hashSync(password, 10);
 
   // Mise à jour du document avec les nouvelles valeurs
   User.findByIdAndUpdate(
-      id,
-      { username, password : hash },
-      { new: true, runValidators: true }
-  )
-  .then(data => {
-    if(!data){
-      return res.status(404).json({result: false, message: 'erreur utilisateur non trouvé'})
+    id,
+    { username, password: hash },
+    { new: true, runValidators: true }
+  ).then((data) => {
+    if (!data) {
+      return res
+        .status(404)
+        .json({ result: false, message: "erreur utilisateur non trouvé" });
     }
     return res.json(data);
-  })
+  });
+});
+
+//suppression d'une patiente de la page ListPatient
+router.put("/delete/:id", (req, res) => {
+  const { id } = req.params;
+
+  User.findByIdAndUpdate(id, { display: false }).then((data) => {
+    if (!data) {
+      return res
+        .status(404)
+        .json({ result: false, message: "erreur utilisateur non trouvé" });
+    }
+    return res.json(data);
+  });
 });
 
 module.exports = router;
