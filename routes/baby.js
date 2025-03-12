@@ -128,11 +128,11 @@ router.post("/upload", async (req, res)=> {
   console.log(result.secure_url);
 
   res.json({url: result.secure_url})
-  })
+})
 
-  // Upload file to cloudinary
+// Upload file to cloudinary
 
-  router.post('/uploadfile', async (req, res) => {
+router.post('/uploadfile', async (req, res) => {
     const photoPath = `./tmp/${uniqid()}.jpg`;
     const resultMove = await req.files.photoFromFront.mv(photoPath);
 
@@ -144,7 +144,7 @@ router.post("/upload", async (req, res)=> {
     }
     fs.unlinkSync(photoPath);
    
-   });
+});
 
 
 

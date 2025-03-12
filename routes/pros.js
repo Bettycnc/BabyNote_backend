@@ -86,9 +86,7 @@ router.put('/:id', (req, res) => {
     });
     return;
   }
-
   const hash = bcrypt.hashSync(password, 10); 
-
   // Mise à jour du document avec les nouvelles valeurs
   userPros.findByIdAndUpdate(
       id,
