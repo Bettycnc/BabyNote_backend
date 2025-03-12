@@ -123,38 +123,27 @@ router.get("/search/:id", (req, res) => {
 // Upload photo to Cloudinary
 
 router.post("/upload", async (req, res)=> {
-  console.log(req.body);
-  
   const result = await cloudinary.uploader.upload(req.body.photo);
   console.log(result);
   console.log(result.secure_url);
 
-  
   res.json({url: result.secure_url})
-  
-  
   })
 
   // Upload file to cloudinary
 
   router.post('/uploadfile', async (req, res) => {
-
     const photoPath = `./tmp/${uniqid()}.jpg`;
- const resultMove = await req.files.photoFromFront.mv(photoPath);
+    const resultMove = await req.files.photoFromFront.mv(photoPath);
 
-   
-   
     if(!resultMove) {
       const resultCloudinary = await cloudinary.uploader.upload(photoPath);
       res.json({ result: true, url: resultCloudinary.secure_url });      
     } else {
       res.json({ result: false, error: resultCopy });
     }
-
-
     fs.unlinkSync(photoPath);
    
-    
    });
 
 

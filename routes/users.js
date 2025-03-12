@@ -116,7 +116,8 @@ router.put("/:id", (req, res) => {
   });
 });
 
-//suppression d'une patiente de la page ListPatient
+
+//Suppression d'une patiente de la page ListPatient
 router.put("/delete/:id", (req, res) => {
   const { id } = req.params;
 
